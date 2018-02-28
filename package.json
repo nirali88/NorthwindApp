@@ -1,0 +1,29 @@
+{
+  "name": "northwindapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.6.9",
+    "karma": "^2.0.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.6.9",
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nirali88/NorthwindApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nirali88/NorthwindApp/issues"
+  },
+  "homepage": "https://github.com/nirali88/NorthwindApp#readme"
+}
