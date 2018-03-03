@@ -17,7 +17,8 @@ module.exports = function(config) {
     files: [
       './node_modules/angular/angular.js',                             // angular
       './node_modules/angular-mocks/angular-mocks.js',                 // loads our modules for tests
-      './app/components/dashboard/*.spec.js'                           // dashboard test cases
+      './app/app.module.js',                                           // app module
+      './app/components/dashboard/*.js'                           // dashboard test cases
     ],
 
 
