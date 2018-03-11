@@ -9,14 +9,20 @@
   },
   "devDependencies": {
     "jasmine-core": "^3.1.0",
+    "jshint": "^2.9.5",
     "karma": "^2.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.1",
     "karma-phantomjs-launcher": "^1.0.4",
-    "karma-spec-reporter": "0.0.32"
+    "karma-spec-reporter": "0.0.32",
+    "lite-server": "^2.3.0",
+    "uglify-js": "^3.3.14"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start",
+    "lint": "jshint app",
+    "dev": "lite-server",
+    "uglify": "mkdir -p dist/js && uglifyjs src/js/*.js -m -o dist/js/app.js"
   },
   "repository": {
     "type": "git",
