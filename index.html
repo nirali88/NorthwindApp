@@ -9,15 +9,72 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.js"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body ng-app="app">
-    <div class="content"></div>
-    <header ng-include="'app/shared/header.html'"></header>
+    <div class="content-area">
+        <header ng-include="'app/shared/header.html'"></header>
+        <ng-view></ng-view>
+        <footer><header ng-include="'app/shared/footer.html'"></header></footer>
+    </div>
+    
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZVq146Saqo5bSFtFu-bmgJplHCuEfxfQ&callback=myMap"></script>
+    <script src="app/components/dashboard/dashboardController.js"></script>
+    
+    <script>
+            function drawMap(data) {
+                    var rows = data['rows'];
+                    for (var i in rows) {
+                        if (rows[i][0] != 'Antarctica') {
+                            var newCoordinates = [];
+                            var geometries = rows[i][1]['geometries'];
+                            if (geometries) {
+                                for (var j in geometries) {
+                                    newCoordinates.push(constructNewCoordinates(geometries[j]));
+                                }
+                            } else {
+                                newCoordinates = constructNewCoordinates(rows[i][1]['geometry']);
+                            }
+                            var country = new google.maps.Polygon({
+                                paths: newCoordinates,
+                                strokeColor: '#ff9900',
+                                strokeOpacity: 1,
+                                strokeWeight: 0.3,
+                                fillColor: '#ffff66',
+                                fillOpacity: 0,
+                                name: rows[i][0]
+                            });
+                            google.maps.event.addListener(country, 'mouseover', function () {
+                                this.setOptions({ fillOpacity: 0.4 });
+                            });
+                            google.maps.event.addListener(country, 'mouseout', function () {
+                                this.setOptions({ fillOpacity: 0 });
+                            });
+                            google.maps.event.addListener(country, 'click', function () {
+                                alert(this.name);
+                            });
+        
+                            country.setMap(map);
+                        }
+                    }
+                }
+        
+                function constructNewCoordinates(polygon) {
+                    var newCoordinates = [];
+                    var coordinates = polygon['coordinates'][0];
+                    for (var i in coordinates) {
+                        newCoordinates.push(
+                            new google.maps.LatLng(coordinates[i][1], coordinates[i][0]));
+                    }
+                    return newCoordinates;
+                }
+        </script>
 </body>
 
 </html>
