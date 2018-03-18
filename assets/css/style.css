@@ -1,11 +1,17 @@
 .content-area
 {
-max-width:  80%;   
+ max-width:  80%;   
  margin: auto;
  padding-top: 10px;
+ color: #777777; 
 }
 
 #map-canvas {
-    height: 600px;
-    width: 800px;
+    height: 350px;
+    width: 100%;
+}
+
+#countrylist
+{
+    font-size: 12px;
 }
