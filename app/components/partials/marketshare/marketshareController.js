@@ -10,7 +10,7 @@ var map;
         vm.data = [[['a', 25], ['b', 14], ['c', 7]]];
 
         vm.chartOptions = {
-            title:'Market Share',
+            title: 'MARKET SHARE',
             //  gridPadding: {top:0, bottom:38, left:0, right:0},
             seriesDefaults: {
                 renderer: $.jqplot.PieRenderer,
@@ -25,6 +25,11 @@ var map;
                 },
                 location: 's',
                 marginTop: '15px'
+            },
+            highlighter: {
+                show: true,
+                useAxesFormatters: false,
+                tooltipFormatString: '%s'
             }
         };
 
