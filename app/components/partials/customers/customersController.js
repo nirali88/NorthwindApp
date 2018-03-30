@@ -4,13 +4,13 @@ var map;
     angular.module('app')
         .controller('customersController', customersController);
 
-    function customersController($scope, dashboardService) {
+    function customersController($rootScope, dashboardService) {
         var vm = this;
 
-        vm.data = [[2, 6, 7, 10],[7, 5, 3, 2]];
+        vm.customers = 0;
 
         vm.chartOptions = {
-            title:'CUSTOMERS',
+            //     title:'CUSTOMERS',
             // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
             animate: !$.jqplot.use_excanvas,
             seriesDefaults: {
@@ -18,17 +18,43 @@ var map;
                 pointLabels: { show: true }
             },
             axes: {
-    
+
                 xaxis: {
                     renderer: $.jqplot.CategoryAxisRenderer,
-                    ticks: ['a', 'b', 'c', 'd']
+                    ticks: vm.ticks// ['a', 'b', 'c', 'd']
                 }
             },
-            
             highlighter: { show: false }
         };
-        $scope.$on('getcountry', function (event, args) {
-            alert('Received COuntry' + args.country);
+
+        $rootScope.$on('loadData', function () {
+            getCustomersByCountry();
         });
+
+        getCustomersByCountry();
+
+        function getCustomersByCountry(country) {
+            var startDateStr = getDateStr($rootScope.commanData.startDate);
+            var endDateStr = getDateStr($rootScope.commanData.endDate);
+
+            dashboardService.GetCustomersByCountry($rootScope.commanData.country, startDateStr, endDateStr)
+                .then(function (data) {
+                    if (data == null || data == undefined)
+                        return;
+                    var arrDates = [], arrCust = [];
+
+                    _.forEach(data, function (el, index, arr1) {
+                        var arr = el.split('|');
+                        arrDates.push(arr[0]);
+                        arrCust.push(arr[1]);
+                    });
+
+                    vm.customers = arrCust.length;
+
+                    vm.data = [arrCust];
+                    vm.ticks = arrDates;
+                });
+        }
+
     }
 })();

@@ -3,13 +3,13 @@
     angular.module('app')
         .controller('orderController', orderController);
 
-    function orderController($scope, dashboardService) {
+    function orderController($rootScope, dashboardService) {
         var vm = this;
-
-        vm.data = [[2, 6, 7, 10],[7, 5, 3, 2]];
+        vm.orders = 0;
+        vm.getOrdersByCountry = getOrdersByCountry;
 
         vm.chartOptions = {
-            title:'ORDERS',
+            //title:'ORDERS',
             // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
             animate: !$.jqplot.use_excanvas,
             seriesDefaults: {
@@ -19,14 +19,39 @@
             axes: {
                 xaxis: {
                     renderer: $.jqplot.CategoryAxisRenderer,
-                    ticks: ['a', 'b', 'c', 'd']
+                    ticks: vm.ticks// ['a', 'b', 'c', 'd']
                 }
             },
             highlighter: { show: false }
         };
 
-        $scope.$on('getcountry', function (event, args) {
-            alert('Received COuntry' + args.country);
+        getOrdersByCountry();
+
+        $rootScope.$on('loadData', function () {
+            getOrdersByCountry();
         });
+
+        function getOrdersByCountry() {
+            var startDateStr = getDateStr($rootScope.commanData.startDate);
+            var endDateStr = getDateStr($rootScope.commanData.endDate);
+
+            dashboardService.GetOrdersByCountry($rootScope.commanData.country, startDateStr, endDateStr)
+                .then(function (data) {
+                    if (data == null || data == undefined)
+                        return;
+                    var arrDates = [], arrOrders = [];
+
+                    _.forEach(data, function (el, index, arr1) {
+                        var arr = el.split('|');
+                        arrDates.push(arr[0]);
+                        arrOrders.push(arr[1]);
+                    });
+
+                    vm.orders = arrOrders.length;
+
+                    vm.data = [arrOrders];
+                    vm.ticks = arrDates;
+                });
+        }
     }
 })();

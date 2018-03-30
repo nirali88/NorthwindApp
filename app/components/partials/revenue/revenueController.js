@@ -3,14 +3,12 @@
     angular.module('app')
         .controller('revenueController', revenueController);
 
-    function revenueController($scope, dashboardService) {
+    function revenueController($rootScope, dashboardService) {
         var vm = this;
 
-        vm.data = [[2, 6, 7, 10]];
-
+        vm.revenue = 0;
+        vm.getRevenuesByCountry = getRevenuesByCountry;
         vm.chartOptions = {
-            title: 'REVENUE',
-            // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
             animate: !$.jqplot.use_excanvas,
             seriesDefaults: {
                 renderer: $.jqplot.BarRenderer,
@@ -19,16 +17,41 @@
             axes: {
                 xaxis: {
                     renderer: $.jqplot.CategoryAxisRenderer,
-                    ticks: ['a', 'b', 'c', 'd']
+                    ticks: vm.ticks
                 }
-            },
-            highlighter: { show: true }
+            }
         };
 
-
-
-        $scope.$on('getcountry', function (event, args) {
-            alert('Received COuntry' + args.country);
+        $rootScope.$on('loadData', function () {
+            getRevenuesByCountry();
         });
+
+        getRevenuesByCountry();
+
+        function getRevenuesByCountry() {
+            var startDateStr = getDateStr($rootScope.commanData.startDate);
+            var endDateStr = getDateStr($rootScope.commanData.endDate);
+            
+            dashboardService.GetRevenuesByCountry($rootScope.commanData.country, startDateStr, endDateStr)
+                .then(function (data) {
+                    if (data == null || data == undefined)
+                        return;
+                    var arrDates = [], arrRev = [];
+
+                    _.forEach(data, function (el, index, arr1) {
+                        var arr = el.split('|');
+                        arrDates.push(arr[0]);
+                        arrRev.push(arr[1]);
+                    });
+
+                    vm.revenue = _.reduce(arrRev, function (total, num) {
+                        return parseFloat(total) + parseFloat(num);
+                    }, 0);
+
+                    vm.data = [arrRev];
+                    vm.ticks = arrDates;
+
+                });
+        }
     }
 })();

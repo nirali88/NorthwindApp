@@ -4,13 +4,13 @@ var map;
     angular.module('app')
         .controller('marketshareController', marketshareController);
 
-    function marketshareController($scope, dashboardService) {
+    function marketshareController($scope, dashboardService, $rootScope) {
         var vm = this;
 
-        vm.data = [[['a', 25], ['b', 14], ['c', 7]]];
+        vm.marketShare = '0%';
 
         vm.chartOptions = {
-            title: 'MARKET SHARE',
+            // title: 'MARKET SHARE',
             //  gridPadding: {top:0, bottom:38, left:0, right:0},
             seriesDefaults: {
                 renderer: $.jqplot.PieRenderer,
@@ -33,8 +33,27 @@ var map;
             }
         };
 
-        $scope.$on('getcountry', function (event, args) {
-            alert('Received COuntry' + args.country);
+        vm.getSalesByCountry = getSalesByCountry;
+
+        getSalesByCountry();
+
+        $rootScope.$on('loadData', function () {
+            getSalesByCountry();
         });
+
+        function getSalesByCountry() {
+            var startDateStr = getDateStr($rootScope.commanData.startDate);
+            var endDateStr = getDateStr($rootScope.commanData.endDate);
+
+            dashboardService.GetSalesByCountry($rootScope.commanData.country,
+                startDateStr, endDateStr)
+                .then(function (data) {
+                    if (data == null || data == undefined)
+                        return;
+                    var arr = data[0].split('|');
+                    vm.marketShare = parseFloat(parseInt(arr[0]) / parseInt(arr[1]) * 100).toFixed(2) + '%';
+                    vm.data = [[[$rootScope.commanData.country, parseInt(arr[0])], ['All', parseInt(arr[1])]]];
+                });
+        }
     }
 })();

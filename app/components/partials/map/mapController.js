@@ -4,30 +4,31 @@ var map;
     angular.module('app')
         .controller('mapController', mapController);
 
-    function mapController($scope, dashboardService) {
+    function mapController($scope, dashboardService, $rootScope) {
         var vm = this;
 
-        vm.countryName = '';
+        vm.countryName = $rootScope.commanData.country;
         vm.initialize = initialize;
         vm.customersList = [];
         vm.setCountry = setCountry;
         vm.getCustomerNamesByCountry = getCustomerNamesByCountry;
 
         vm.initialize();
-        vm.getCustomerNamesByCountry('United States');
+        vm.getCustomerNamesByCountry();
 
-        function getCustomerNamesByCountry(country) {
-            vm.countryName = country;
+        function getCustomerNamesByCountry() {
             //get customer names
-            dashboardService.GetCustomerNamesByCountry(country)
+            dashboardService.GetCustomerNamesByCountry(vm.countryName)
                 .then(function (data) {
                     vm.customersList = data.toString();
                 });
         }
 
         function setCountry(country) {
-            getCustomerNamesByCountry(country);
-            $scope.$parent.$broadcast('getcountry', { country: country });
+            $rootScope.commanData.country = country;
+            vm.countryName = country;
+            getCustomerNamesByCountry();
+            $rootScope.$broadcast('loadData');
         }
 
         function initialize() {
