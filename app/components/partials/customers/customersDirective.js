@@ -1,16 +1,15 @@
-(function () {
+require(['app'], function (app) {
     "use strict";
-    angular.module('app')
-        .directive('customerDirective', customersDirective);
+    
+    app.register.directive('customerDirective', customersDirective);
 
-    function customersDirective() 
-    {
+    function customersDirective() {
         return {
-            restrict:'E',
-            scope:{},            
-            templateUrl:'app/components/partials/customers/customersDirective.html',
-            controller:'customersController',
+            restrict: 'E',
+            scope: {},
+            templateUrl: 'app/components/partials/customers/customersDirective.html',
+            controller: 'customersController',
             controllerAs: 'vm'
         }
-     }
-})();
+    }
+});

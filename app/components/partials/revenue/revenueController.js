@@ -1,7 +1,7 @@
-(function () {
+require(['app'], function (app) {
     "use strict";
-    angular.module('app')
-        .controller('revenueController', revenueController);
+    app.register
+        .controller('revenueController', ['$rootScope', 'dashboardService', revenueController]);
 
     function revenueController($rootScope, dashboardService) {
         var vm = this;
@@ -31,7 +31,7 @@
         function getRevenuesByCountry() {
             var startDateStr = getDateStr($rootScope.commanData.startDate);
             var endDateStr = getDateStr($rootScope.commanData.endDate);
-            
+
             dashboardService.GetRevenuesByCountry($rootScope.commanData.country, startDateStr, endDateStr)
                 .then(function (data) {
                     if (data == null || data == undefined)
@@ -54,4 +54,4 @@
                 });
         }
     }
-})();
+});

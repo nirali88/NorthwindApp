@@ -1,8 +1,8 @@
-var map;
-(function () {
+
+require(['app'], function (app) {
     "use strict";
-    angular.module('app')
-        .controller('customersController', customersController);
+    app.register
+        .controller('customersController', ['$rootScope', 'dashboardService', customersController]);
 
     function customersController($rootScope, dashboardService) {
         var vm = this;
@@ -57,4 +57,4 @@ var map;
         }
 
     }
-})();
+});

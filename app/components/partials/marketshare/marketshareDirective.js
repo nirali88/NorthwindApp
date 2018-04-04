@@ -1,16 +1,32 @@
-(function () {
+require(['app'], function (app) {
     "use strict";
-    angular.module('app')
-        .directive('marketShareDirective', marketshareDirective);
+    
+    app.register.directive('marketShareDirective', marketshareDirective);
 
-    function marketshareDirective() 
-    {
+    function marketshareDirective() {
         return {
-            restrict:'E',
-            scope:{},            
-            templateUrl:'app/components/partials/marketshare/marketshareDirective.html',
-            controller:'marketshareController',
+            restrict: 'E',
+            scope: {},
+            templateUrl: 'app/components/partials/marketshare/marketshareDirective.html',
+            controller: 'marketshareController',
             controllerAs: 'vm'
         }
-     }
-})();
+    }
+});
+
+// (function () {
+//     "use strict";
+//     angular.module('app')
+//         .directive('marketShareDirective', marketshareDirective);
+
+//     function marketshareDirective() 
+//     {
+//         return {
+//             restrict:'E',
+//             scope:{},            
+//             templateUrl:'app/components/partials/marketshare/marketshareDirective.html',
+//             controller:'marketshareController',
+//             controllerAs: 'vm'
+//         }
+//      }
+// })();
