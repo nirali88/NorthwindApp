@@ -46,7 +46,23 @@ define('app', ['angular'], function (angular) {
                 resolve: {
                     resolver: ['$q', '$rootScope', function ($q, $rootScope) {
                         var deferred = $q.defer();
-                        require(['components/dashboard/dashboardController'], function () {
+                        require(['dashboardController'], function () {
+                            $rootScope.$apply(function () {
+                                deferred.resolve();
+                            });
+                        });
+                        return deferred.promise;
+                    }]
+                }
+            })
+            .when("/teameff", {
+                templateUrl: "./app/components/teamEff/teameff.html",
+                controller: "teameffController",
+                controllerAs: "vm",
+                resolve: {
+                    resolver: ['$q', '$rootScope', function ($q, $rootScope) {
+                        var deferred = $q.defer();
+                        require(['teameffController'], function () {
                             $rootScope.$apply(function () {
                                 deferred.resolve();
                             });

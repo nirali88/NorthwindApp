@@ -13,10 +13,12 @@ require.config({
 
         // services
         'dashboardService': 'components/dashboard/dashboardService',
+        'teameffService': 'components/teamEff/teameffService',
 
         // Controllers
 
         'dashboardController': 'components/dashboard/dashboardController',
+        'teameffController': 'components/teamEff/teameffController',
         'mapController': 'components/partials/map/mapController',
         'marketshareController': 'components/partials/marketshare/marketshareController',
         'orderController': 'components/partials/orders/orderController',
@@ -41,6 +43,7 @@ require.config({
         'categoryAxisRenderer': '/assets/libs/jqplot.categoryAxisRenderer',
         'pointLabels': '/assets/libs/jqplot.pointLabels',
         'highlighter': '/assets/libs/jqplot.highlighter',
+        // 'ui.calendar': '/assets/libs/calendar',
         'common': '/assets/js/common',
         'constants': '/assets/js/constants'
     },
@@ -53,13 +56,13 @@ require.config({
         'ui.chart': ['angular'],
         'loadingbar': ['angular'],
         'constants': ['app'],
+        // 'ui.calendar': ['angular'],
         'app': ['angular', 'ngRoute', 'ui-bootstrap', 'ngAnimate', 'ui.chart', 'lodash', 'loadingbar'],
         'approute': ['app'],
-        // 'map': ['jqplot', 'pieRenderer', 'barRenderer', 'categoryAxisRenderer', 'pointLabels', 'highlighter'],
         'mapController': ['map', 'common', 'ui.chart'],
         'mapDirective': ['mapController'],
-        'dashboardController': ['constants', 'mapDirective', 'dashboardService', 'marketshareController', 'marketshareDirective', 'orderController', 'orderDirective', 'revenueController', 'revenueDirective', 'customersController', 'customersDirective']
-        // 'marketshareDirective': []
+        'dashboardController': ['constants', 'mapDirective', 'dashboardService', 'marketshareController', 'marketshareDirective', 'orderController', 'orderDirective', 'revenueController', 'revenueDirective', 'customersController', 'customersDirective'],
+        'teameffController': ['constants', 'common', 'teameffService']
     }
 });
 

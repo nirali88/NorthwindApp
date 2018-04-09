@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-sm-7">
+        <h4>TEAM EFFICIENCY</h4>
+    </div>
+    <div class="col-sm-2">
+        <span class="ttl">Starts From:</span>
+        <input type="date" name="" ng-model="vm.startDate" id="dtStart">
+    </div>
+    <div class="col-sm-2">
+        <span class="ttl">Ends From:</span>
+        <input type="date" name="" id="dtEnd" ng-model="vm.endDate">
+    </div>
+    <div class="col-sm-1">
+        <br>
+        <button id="btnGo">Go</button>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-sm-2">
+        <div class="teamMember ttl">TEAM MEMBERS</div>
+        <br/>
+        <div ng-repeat="x in vm.teamMembers" class="teamMember" ng-click="vm.loadEmployeeDetail(x.EmployeeID)">
+            {{x.FirstName}} {{x.LastName}}
+            <br>
+            <span class="title">{{x.Title}}</span>
+        </div>
+    </div>
+    <div class="col-sm-10">
+        <br>
+        
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="ttl">ABOUT</div>
+                <br>
+                <span style="float: left;">
+                    <img src="/assets/img/{{vm.employeeDetail.objEmp.EmployeeID}}-t.png" class="employee-details-image" alt="">
+                </span>
+                <span>
+                    <span>
+                        {{vm.employeeDetail.objEmp.FirstName}} {{vm.employeeDetail.objEmp.LastName}}
+                    </span>
+                    <br>
+                    <span class="title"> {{vm.employeeDetail.objEmp.Title}}
+                        <br>&#9742 {{vm.employeeDetail.objEmp.HomePhone}}
+                    </span>
+                </span>
+            </div>
+            <div class="col-sm-4">
+                <div class="ttl">TOTAL SALES</div>
+                <br>
+                <span class="stats">{{vm.totalSales | currency}}</span>
+            </div>
+            <div class="col-sm-4">
+                <div class="ttl">MONTHLY AVERAGE SALES</div>
+                <br>
+                <span class="stats">{{vm.monthlyAvgSales | currency}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <br>
+                <br>
+                <br>
+                <div class="ttl">REPRESENTATIVE SALES VS TOTAL SALES</div>
+                <br>
+                <br>
+                <div ui-chart="vm.data" chart-options="vm.chartOptions"></div>
+            </div>
+        </div>
+    </div>
+</div>
