@@ -1,7 +1,7 @@
 define('app', ['angular'], function (angular) {
     "use strict";
 
-    var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ui.chart', 'angular-loading-bar']);
+    var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ui.chart', 'angular-loading-bar','ui.grid','ui.grid.pagination']);
 
     app.init = init;
     app.run(['$rootScope', Run]);
@@ -72,9 +72,20 @@ define('app', ['angular'], function (angular) {
                 }
             })
             .when("/orders", {
-                template: "Orders Page"
-                // controller: "dashboardController",
-                // controllerAs: "vm"
+                templateUrl: "./app/components/ordersMain/ordersMain.html",
+                controller: "ordersMainController",
+                controllerAs: "vm",
+                resolve: {
+                    resolver: ['$q', '$rootScope', function ($q, $rootScope) {
+                        var deferred = $q.defer();
+                        require(['ordersMainController'], function () {
+                            $rootScope.$apply(function () {
+                                deferred.resolve();
+                            });
+                        });
+                        return deferred.promise;
+                    }]
+                }
             });
 
         cfpLoadingBarProvider.includeSpinner = false;

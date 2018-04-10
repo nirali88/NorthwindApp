@@ -10,14 +10,19 @@ require.config({
         'app': 'app.module',
         'approute': 'app.routes',
         'ui.chart': 'components/partials/chart/chart',
+        'ui.grid': '/node_modules/angular-ui-grid/ui-grid.min',
 
         // services
         'dashboardService': 'components/dashboard/dashboardService',
+        'ordersMainService': 'components/ordersMain/ordersMainService',
+
         'teameffService': 'components/teamEff/teameffService',
 
         // Controllers
 
         'dashboardController': 'components/dashboard/dashboardController',
+        'ordersMainController': 'components/ordersMain/ordersMainController',
+
         'teameffController': 'components/teamEff/teameffController',
         'mapController': 'components/partials/map/mapController',
         'marketshareController': 'components/partials/marketshare/marketshareController',
@@ -57,11 +62,13 @@ require.config({
         'loadingbar': ['angular'],
         'constants': ['app'],
         // 'ui.calendar': ['angular'],
-        'app': ['angular', 'ngRoute', 'ui-bootstrap', 'ngAnimate', 'ui.chart', 'lodash', 'loadingbar'],
+        'app': ['angular', 'ngRoute', 'ui-bootstrap', 'ngAnimate', 'ui.chart', 'lodash', 'loadingbar', 'ui.grid'],
         'approute': ['app'],
+        'ui.grid': ['angular'],
         'mapController': ['map', 'common', 'ui.chart'],
         'mapDirective': ['mapController'],
         'dashboardController': ['constants', 'mapDirective', 'dashboardService', 'marketshareController', 'marketshareDirective', 'orderController', 'orderDirective', 'revenueController', 'revenueDirective', 'customersController', 'customersDirective'],
+        'ordersMainController': ['constants', 'common', 'ordersMainService'],
         'teameffController': ['constants', 'common', 'teameffService']
     }
 });

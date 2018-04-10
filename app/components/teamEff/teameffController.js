@@ -17,6 +17,7 @@ define("teameffController", ['app'], function (app) {
         vm.getEmployeeNames = getEmployeeNames;
         vm.getEmployeeDetail = getEmployeeDetail;
         vm.loadEmployeeDetail = loadEmployeeDetail;
+       
         vm.chartOptions = {
             animate: !$.jqplot.use_excanvas,
             seriesDefaults: {
@@ -34,6 +35,18 @@ define("teameffController", ['app'], function (app) {
                 useAxesFormatters: false,
                 tooltipFormatString: '%s'
             }
+        };
+
+        vm.gridOptions = {
+            data: [],
+            enableFiltering: true,
+            columnDefs: [{ field: 'OrderID', displayName: 'Order #',  cellTemplate:'<div>' +
+            '<a href="#">{{row.entity.OrderID}}</a>' +
+            '</div>' },
+            { field: 'OrderDate', displayName: 'Order Date', type: 'date', cellFilter: 'date:\'yyyy-MM-dd\'' },
+            { field: 'ShipName', displayName: 'Ship Name' },
+            { field: 'EmployeeID', displayName: 'Employee ID', visible: false }
+            ]
         };
 
         getEmployeeNames();
@@ -60,6 +73,7 @@ define("teameffController", ['app'], function (app) {
                     return;
                 vm.employeeDetail = data;
 
+                vm.gridOptions.data = vm.employeeDetail.lstOrders;
                 vm.totalSales = _.sumBy(data.lstSales, function (o) { return o.Rep_Sales; });
                 vm.monthlyAvgSales = vm.totalSales / data.lstSales.length;
                 vm.ticks = ["Jul-96", "Aug-96", "Sep-96", "Oct-96", "Nov-96", "Dec-96", "Jan-97", "Feb-97", "Mar-97", "Apr-97", "May-97", "Jun-97", "Jul-97", "Aug-97", "Sep-97", "Oct-97", "Nov-97", "Dec-97", "Jan-98", "Feb-98", "Mar-98"];//_.map(data.lstSales, 'Duration');
