@@ -24,8 +24,11 @@ define("ordersMainController", ['app'], function (app) {
                 { field: 'ShipCountry', displayName: 'Ship Country' },
                 { field: 'CustomerName', displayName: 'Customer Name' },
                 { field: 'ShipperName', displayName: 'Shipper Name' },
-                { field: 'EmployeeName', displayName: 'Order By' },
-
+                {
+                    field: 'EmployeeName', displayName: 'Order Placed By', cellTemplate: '<div>' +
+                        '<a target="_blank" href="#!/teameff/{{row.entity.EmployeeID}}">{{row.entity.EmployeeName}}</a>' +
+                        '</div>'
+                },
                 { field: 'EmployeeID', displayName: 'Employee ID', visible: false },
                 { field: 'CustomerID', displayName: 'Customer ID', visible: false },
                 { field: 'ShipVia', displayName: 'Ship Via', visible: false }

@@ -1,9 +1,9 @@
 define("teameffController", ['app'], function (app) {
     "use strict";
 
-    app.register.controller('teameffController', ['$rootScope', 'teameffService', teameffController]);
+    app.register.controller('teameffController', ['$rootScope', 'teameffService', '$routeParams', teameffController]);
 
-    function teameffController($rootScope, teameffService) {
+    function teameffController($rootScope, teameffService, $routeParams) {
 
         var vm = this;
         vm.startDate = $rootScope.commanData.startDate;
@@ -17,7 +17,7 @@ define("teameffController", ['app'], function (app) {
         vm.getEmployeeNames = getEmployeeNames;
         vm.getEmployeeDetail = getEmployeeDetail;
         vm.loadEmployeeDetail = loadEmployeeDetail;
-       
+
         vm.chartOptions = {
             animate: !$.jqplot.use_excanvas,
             seriesDefaults: {
@@ -40,9 +40,11 @@ define("teameffController", ['app'], function (app) {
         vm.gridOptions = {
             data: [],
             enableFiltering: true,
-            columnDefs: [{ field: 'OrderID', displayName: 'Order #',  cellTemplate:'<div>' +
-            '<a href="#">{{row.entity.OrderID}}</a>' +
-            '</div>' },
+            columnDefs: [{
+                field: 'OrderID', displayName: 'Order #', cellTemplate: '<div>' +
+                    '<a href="#">{{row.entity.OrderID}}</a>' +
+                    '</div>'
+            },
             { field: 'OrderDate', displayName: 'Order Date', type: 'date', cellFilter: 'date:\'yyyy-MM-dd\'' },
             { field: 'ShipName', displayName: 'Ship Name' },
             { field: 'EmployeeID', displayName: 'Employee ID', visible: false }
@@ -50,7 +52,11 @@ define("teameffController", ['app'], function (app) {
         };
 
         getEmployeeNames();
-        loadEmployeeDetail(1);
+
+        if ($routeParams.id == undefined)
+            loadEmployeeDetail(1);
+        else
+            loadEmployeeDetail($routeParams.id);
 
         //Defination of functions
 

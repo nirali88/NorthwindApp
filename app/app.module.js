@@ -1,7 +1,7 @@
 define('app', ['angular'], function (angular) {
     "use strict";
 
-    var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ui.chart', 'angular-loading-bar','ui.grid','ui.grid.pagination']);
+    var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ui.chart', 'angular-loading-bar', 'ui.grid', 'ui.grid.pagination']);
 
     app.init = init;
     app.run(['$rootScope', Run]);
@@ -55,7 +55,7 @@ define('app', ['angular'], function (angular) {
                     }]
                 }
             })
-            .when("/teameff", {
+            .when("/teameff/:id?", {
                 templateUrl: "./app/components/teamEff/teameff.html",
                 controller: "teameffController",
                 controllerAs: "vm",
