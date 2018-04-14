@@ -5,6 +5,7 @@ define("ordersMainService", ['app'], function (app) {
 
     function ordersMainService($http, config) {
         this.GetMainOrdersList = GetMainOrdersList;
+        this.GetOrdersDetails = GetOrdersDetails;
 
         var API = config.apiUrl;
 
@@ -12,6 +13,16 @@ define("ordersMainService", ['app'], function (app) {
 
         function GetMainOrdersList() {
             return $http.get(API + 'GetMainOrdersList')
+                .then(function (res) {
+                    return res.data;
+                })
+                .catch(function (res) {
+                    return res.data;
+                });
+        }
+
+        function GetOrdersDetails(orderID) {
+            return $http.get(API + 'orderlines/' + orderID)
                 .then(function (res) {
                     return res.data;
                 })

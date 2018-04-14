@@ -29,6 +29,7 @@ require.config({
         'orderController': 'components/partials/orders/orderController',
         'revenueController': 'components/partials/revenue/revenueController',
         'customersController': 'components/partials/customers/customersController',
+        'orderDetailsController':'components/partials/orderDetails/orderDetailsController',
 
         //directives
 
@@ -68,8 +69,8 @@ require.config({
         'mapController': ['map', 'common', 'ui.chart'],
         'mapDirective': ['mapController'],
         'dashboardController': ['constants', 'mapDirective', 'dashboardService', 'marketshareController', 'marketshareDirective', 'orderController', 'orderDirective', 'revenueController', 'revenueDirective', 'customersController', 'customersDirective'],
-        'ordersMainController': ['constants', 'common', 'ordersMainService'],
-        'teameffController': ['constants', 'common', 'teameffService']
+        'ordersMainController': ['constants', 'common', 'ordersMainService','orderDetailsController'],
+        'teameffController': ['constants', 'common', 'teameffService','orderDetailsController']
     }
 });
 

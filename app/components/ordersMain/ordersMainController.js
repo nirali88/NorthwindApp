@@ -1,13 +1,15 @@
 define("ordersMainController", ['app'], function (app) {
     "use strict";
 
-    app.register.controller('ordersMainController', ['ordersMainService', ordersMainController]);
+    app.register.controller('ordersMainController',
+        ['ordersMainService', '$scope', '$uibModal', ordersMainController]);
 
-    function ordersMainController(ordersMainService) {
+    function ordersMainController(ordersMainService, $scope, $uibModal) {
         var vm = this;
         vm.getMainOrdersList = getMainOrdersList;
+        $scope.openOrderDetail = openOrderDetail;
 
-        vm.gridOptions = {
+        $scope.gridOptions = {
             data: [],
             enableFiltering: true,
             paginationPageSizes: [25, 50, 75],
@@ -15,7 +17,7 @@ define("ordersMainController", ['app'], function (app) {
             columnDefs: [
                 {
                     field: 'OrderID', displayName: 'Order #', cellTemplate: '<div>' +
-                        '<a href="#">{{row.entity.OrderID}}</a>' +
+                        '<a ng-href="" ng-click="grid.appScope.openOrderDetail(COL_FIELD)" >{{row.entity.OrderID}}</a>' +
                         '</div>'
                 },
                 { field: 'OrderDate', displayName: 'Order Date', type: 'date', cellFilter: 'date:\'yyyy-MM-dd\'' },
@@ -34,12 +36,33 @@ define("ordersMainController", ['app'], function (app) {
                 { field: 'ShipVia', displayName: 'Ship Via', visible: false }
             ]
         };
+
         getMainOrdersList();
         function getMainOrdersList() {
             ordersMainService.GetMainOrdersList().then(function (data) {
                 if (data == null || data == undefined)
                     return;
-                vm.gridOptions.data = data;
+                $scope.gridOptions.data = data;
+            });
+        }
+
+        function openOrderDetail(orderID) {
+            //alert(orderID);
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/components/partials/orderDetails/orderDetails.html',
+                controller: 'orderDetailsController',
+                size: 'lg',
+                resolve: {
+                    orderID: function () {
+                        return orderID;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                //$scope.selected = selectedItem;
+            }, function () {
+                //$log.info('Modal dismissed at: ' + new Date());
             });
         }
     }
