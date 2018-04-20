@@ -15,21 +15,25 @@ require.config({
         // services
         'dashboardService': 'components/dashboard/dashboardService',
         'ordersMainService': 'components/ordersMain/ordersMainService',
-
         'teameffService': 'components/teamEff/teameffService',
+        'authService': 'components/userMgmt/authService',
+        'userService': 'components/userMgmt/userService',
+
 
         // Controllers
 
         'dashboardController': 'components/dashboard/dashboardController',
         'ordersMainController': 'components/ordersMain/ordersMainController',
-
         'teameffController': 'components/teamEff/teameffController',
         'mapController': 'components/partials/map/mapController',
         'marketshareController': 'components/partials/marketshare/marketshareController',
         'orderController': 'components/partials/orders/orderController',
         'revenueController': 'components/partials/revenue/revenueController',
         'customersController': 'components/partials/customers/customersController',
-        'orderDetailsController':'components/partials/orderDetails/orderDetailsController',
+        'orderDetailsController': 'components/partials/orderDetails/orderDetailsController',
+        'loginController': 'components/userMgmt/loginController',
+        'registerController': 'components/userMgmt/registerController',
+        'headerController': 'components/partials/header/headerController',
 
         //directives
 
@@ -38,6 +42,7 @@ require.config({
         'orderDirective': 'components/partials/orders/orderDirective',
         'revenueDirective': 'components/partials/revenue/revenueDirective',
         'customersDirective': 'components/partials/customers/customersDirective',
+        //'headerDirective': 'components/partials/header/headerDirective',
 
 
         //assets libs load
@@ -69,12 +74,16 @@ require.config({
         'mapController': ['map', 'common', 'ui.chart'],
         'mapDirective': ['mapController'],
         'dashboardController': ['constants', 'mapDirective', 'dashboardService', 'marketshareController', 'marketshareDirective', 'orderController', 'orderDirective', 'revenueController', 'revenueDirective', 'customersController', 'customersDirective'],
-        'ordersMainController': ['constants', 'common', 'ordersMainService','orderDetailsController'],
-        'teameffController': ['constants', 'common', 'teameffService','orderDetailsController']
+        'ordersMainController': ['constants', 'common', 'ordersMainService', 'orderDetailsController'],
+        'teameffController': ['constants', 'common', 'teameffService', 'orderDetailsController'],
+        'loginController': ['constants', 'authService'],
+        'authService': ['userService'],
+        'registerController': ['constants']
+       // 'headerController': ['constants']
     }
 });
 
 //load angular dynamically
-require(['app'], function (app) {
+require(['app', 'headerController'], function (app) {
     app.init();
 });
